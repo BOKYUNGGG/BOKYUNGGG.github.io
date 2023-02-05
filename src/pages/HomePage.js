@@ -1,5 +1,4 @@
-import Clock from "../components/Clock.js"
-import { startInterval, getWeek } from "../module/clock.js"
+import TodoForm from "../components/TodoForm.js"
 
 export default function HomePage({
     $target
@@ -12,32 +11,21 @@ export default function HomePage({
     this.template = () => {
         const template = `
             <h1>홈페이지</h1>
-            <section class='clock'></section>
+            <section class='todo-form'></section>
         `
         return template
     }
     this.render = () => {
         $target.className = 'HomePage'
         $target.innerHTML = this.template()
-
-        const $clock = $target.querySelector('.clock')
-        const callback = () => {
-            const today = new Date()
-            const month = today.getMonth() + 1
-            const date = today.getDate()
-            const week = today.getDay()
-            const hour = today.getHours()
-            const minute = today.getMinutes()
-            const now = {
-                month : month,
-                date : date,
-                week : getWeek(week),
-                hour : hour,
-                minute : minute
+        const $todoSection = $target.querySelector(".todo-form")
+        new TodoForm({
+            $target : $todoSection, 
+            initialState : {
+                title : "",
+                memo : ""
             }
-            new Clock({$target : $clock, initialState : now})
-        }
-        startInterval(60, callback)
+        })
     }
     
 
