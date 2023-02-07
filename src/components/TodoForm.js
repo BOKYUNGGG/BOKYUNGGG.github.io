@@ -1,7 +1,7 @@
 export default function TodoForm(
     {
         $target,
-        initialState
+        handler
     }
 ){
     this.setState = (nextState) => {
@@ -41,7 +41,10 @@ export default function TodoForm(
             for (const [key, value] of formData){
                 input[key] = value
             }
-            localStorage.setItem(input['title'], input['memo'])
+            handler({
+                title : input['title'],
+                memo : input['memo']
+            })
             this.setState({
                 title : "",
                 memo : ""
@@ -52,6 +55,11 @@ export default function TodoForm(
         $target.innerHTML = this.template()
         this.setEvent()
     }
-    this.setState(initialState)
+    this.setState(
+        {
+            title : "",
+            memo :""
+        }
+    )
 }
 
